@@ -101,7 +101,7 @@ class App(QDialog):
         quiz4_layout.setAlignment(Qt.AlignTop)
 
         ar_btn = QPushButton('4.1 Augmented reality')
-        # ar_btn.clicked.connect(self.quiz4.gaussianSmooth)
+        ar_btn.clicked.connect(self.quiz4.projection)
         quiz4_layout.addWidget(ar_btn)
 
         self.quiz4groupbox.setLayout(quiz4_layout)
