@@ -23,7 +23,6 @@ class Quiz1():
             speckleWindowSize = 100,
             speckleRange = 32
         )
-        stereo.setMinDisparity(0)
         disparity = stereo.compute(self.imageL, self.imageR)
         plt.imshow(disparity, 'gray')
         plt.show()
