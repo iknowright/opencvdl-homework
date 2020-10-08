@@ -6,14 +6,14 @@ from PyQt5.QtWidgets import QPushButton, QGroupBox, QLineEdit, QApplication, QMe
 from PyQt5.QtGui import QDoubleValidator, QIntValidator, QFont
 from PyQt5.QtCore import Qt, pyqtSlot
 
-from quizes import *
+from quiz import *
 
 class App(QDialog):
 
     def __init__(self):
         super().__init__()
         self.initUI()
-    
+
 
     def center(self):
         frameGm = self.frameGeometry()
@@ -28,12 +28,12 @@ class App(QDialog):
         self.setWindowTitle("Homework 1")
         self.createFirst2Quiz()
         self.createLast2Quiz()
-        
+
         windowLayout = QHBoxLayout()
         windowLayout.addLayout(self.verticalGroupBoxes1)
         windowLayout.addLayout(self.verticalGroupBoxes2)
         self.setLayout(windowLayout)
-        
+
         self.center()
         self.show()
 
@@ -44,7 +44,7 @@ class App(QDialog):
         self.quiz1groupbox = QGroupBox("1. Stereo")
         quiz1_layout = QVBoxLayout()
         quiz1_layout.setAlignment(Qt.AlignTop)
-        
+
         show_img_btn = QPushButton('1.1 Disparity')
         show_img_btn.clicked.connect(self.quiz1.depth_map)
         quiz1_layout.addWidget(show_img_btn)
@@ -75,7 +75,7 @@ class App(QDialog):
         quiz_12_vlayout.addWidget(self.quiz2groupbox)
 
         self.verticalGroupBoxes1 = quiz_12_vlayout
-    
+
 
     def createQuiz3(self):
         self.quiz3 = Quiz3()

@@ -61,7 +61,7 @@ class Quiz3():
         while(cap.isOpened() and first is None):
             ret, frame = cap.read()
             first = frame
-            
+
         cap.release()
 
         # Tune the parameters
@@ -83,7 +83,7 @@ class Quiz3():
             y = round(y)
             if x < 500:
                 pts.append(i.pt)
-                frame = cv2.rectangle(frame, (x-5, y-5), (x+5,y+5), (0, 0, 255), 1) 
+                frame = cv2.rectangle(frame, (x-5, y-5), (x+5,y+5), (0, 0, 255), 1)
 
         self.points = np.asarray(pts).reshape((len(pts), 1, 2))
         self.frame = frame
@@ -103,7 +103,7 @@ class Quiz3():
         lk_params = dict( winSize  = (21,21),
                         maxLevel = 2,
                         criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
-       
+
         # Create some random colors
         color = np.random.randint(0,255,3)
 
@@ -133,7 +133,7 @@ class Quiz3():
                 mask = cv2.line(mask, (a,b),(c,d), color.tolist(), 1)
                 a = int(round(a))
                 b = int(round(b))
-                frame = cv2.rectangle(frame, (a-5, b-5), (a+5,b+5), (0, 0, 255), 1) 
+                frame = cv2.rectangle(frame, (a-5, b-5), (a+5,b+5), (0, 0, 255), 1)
 
             img = cv2.add(frame,mask)
             cv2.imshow('frame',img)
@@ -142,14 +142,14 @@ class Quiz3():
                 break
             # Now update the previous frame and previous points
             old_gray = frame_gray.copy()
-            p0 = good_new.reshape(-1,1,2)   
+            p0 = good_new.reshape(-1,1,2)
 
-        cap.release()     
+        cap.release()
 
 class Quiz4():
     def __init__(self):
         pass
-    
+
     def projection(self):
         intrinsic = np.array(
             [[2225.49585482, 0, 1025.5459589],
