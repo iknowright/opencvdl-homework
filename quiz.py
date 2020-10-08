@@ -7,10 +7,10 @@ import numpy as np
 import random
 import time
 
-class Quiz1():
+class Quiz3():
     def __init__(self):
-        self.imageL = cv2.imread('src/imL.png', 0)
-        self.imageR = cv2.imread('src/imR.png', 0)
+        self.imageL = cv2.imread('Q3_Image/imL.png', 0)
+        self.imageR = cv2.imread('Q3_Image/imR.png', 0)
 
     def depth_map(self):
         stereo = cv2.StereoSGBM_create(

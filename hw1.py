@@ -2,7 +2,7 @@ import sys
 
 # GUI use case
 from PyQt5.QtWidgets import QDesktopWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QDialog
-from PyQt5.QtWidgets import QPushButton, QGroupBox, QLineEdit, QApplication, QMessageBox
+from PyQt5.QtWidgets import QPushButton, QGroupBox, QLineEdit, QApplication, QMessageBox, QLabel, QComboBox
 from PyQt5.QtGui import QDoubleValidator, QIntValidator, QFont
 from PyQt5.QtCore import Qt, pyqtSlot
 
@@ -26,12 +26,12 @@ class App(QDialog):
     def initUI(self):
 
         self.setWindowTitle("Homework 1")
-        self.createFirst2Quiz()
-        self.createLast2Quiz()
+        # self.createLast2Quiz()
 
-        windowLayout = QHBoxLayout()
-        windowLayout.addLayout(self.verticalGroupBoxes1)
-        windowLayout.addLayout(self.verticalGroupBoxes2)
+        windowLayout = QVBoxLayout()
+        windowLayout.addWidget(self.createQuiz1())
+        windowLayout.addWidget(self.createQuiz2())
+        windowLayout.addWidget(self.createQuiz3())
         self.setLayout(windowLayout)
 
         self.center()
@@ -39,80 +39,79 @@ class App(QDialog):
 
 
     def createQuiz1(self):
-        self.quiz1 = Quiz1()
+        # self.quiz1 = Quiz1()
 
-        self.quiz1groupbox = QGroupBox("1. Stereo")
-        quiz1_layout = QVBoxLayout()
+        quiz1groupbox = QGroupBox("1. Calibration")
+        quiz1_layout = QHBoxLayout()
         quiz1_layout.setAlignment(Qt.AlignTop)
 
-        show_img_btn = QPushButton('1.1 Disparity')
-        show_img_btn.clicked.connect(self.quiz1.depth_map)
-        quiz1_layout.addWidget(show_img_btn)
+        quiz_11_12_14_layout = QVBoxLayout()
+        quiz_11_12_14_layout.setAlignment(Qt.AlignTop)
 
-        self.quiz1groupbox.setLayout(quiz1_layout)
+        quiz_13_groupbox = QGroupBox("1.3 Find Extrinsic")
+
+        btn_11 = QPushButton('1.1 Find Corners')
+        # btn_11.clicked.connect(self.quiz1.depth_map)
+        quiz_11_12_14_layout.addWidget(btn_11)
+
+        btn_12 = QPushButton('1.2 Find Intrinsic')
+        # btn_12.clicked.connect(self.quiz1.depth_map)
+        quiz_11_12_14_layout.addWidget(btn_12)
+
+        btn_14 = QPushButton('1.4 Find Distortion')
+        # btn_14.clicked.connect(self.quiz1.depth_map)
+        quiz_11_12_14_layout.addWidget(btn_14)
+
+        quiz_13_layout = QVBoxLayout()
+        quiz_13_layout.addWidget(QLabel("Select image"))
+
+        image_combo_box = QComboBox()
+        image_combo_box.addItems([])
+
+        quiz_13_layout.addWidget(image_combo_box)
+
+        btn_13 = QPushButton('1.3 Find Extrinsic')
+        # btn_14.clicked.connect(self.quiz1.depth_map)
+        quiz_13_layout.addWidget(btn_13)
+
+        quiz1_layout.addLayout(quiz_11_12_14_layout)
+        quiz1_layout.addLayout(quiz_13_layout)
+        quiz1groupbox.setLayout(quiz1_layout)
+
+        return quiz1groupbox
 
 
     def createQuiz2(self):
-        self.quiz2 = Quiz2()
+        # self.quiz2 = Quiz2()
 
-        self.quiz2groupbox = QGroupBox("2. Background subtraction")
+        quiz2groupbox = QGroupBox("2. Augmented Reality")
         quiz2_layout = QVBoxLayout()
         quiz2_layout.setAlignment(Qt.AlignTop)
 
-        bg_sub_btn = QPushButton('2.1 Background subtraction')
-        bg_sub_btn.clicked.connect(self.quiz2.backgroundSubtraction)
-        quiz2_layout.addWidget(bg_sub_btn)
+        btn_21 = QPushButton('2.1 Show tetrahedron')
+        # btn_21.clicked.connect(self.quiz2.backgroundSubtraction)
+        quiz2_layout.addWidget(btn_21)
 
-        self.quiz2groupbox.setLayout(quiz2_layout)
+        quiz2groupbox.setLayout(quiz2_layout)
 
-
-    def createFirst2Quiz(self):
-        self.createQuiz1()
-        self.createQuiz2()
-
-        quiz_12_vlayout = QVBoxLayout()
-        quiz_12_vlayout.addWidget(self.quiz1groupbox)
-        quiz_12_vlayout.addWidget(self.quiz2groupbox)
-
-        self.verticalGroupBoxes1 = quiz_12_vlayout
+        return quiz2groupbox
 
 
     def createQuiz3(self):
-        self.quiz3 = Quiz3()
+        # self.quiz3 = Quiz3()
 
-        self.quiz3groupbox = QGroupBox("3. Feature Tracking")
+        quiz3groupbox = QGroupBox("3. Stereo Disparity Map")
         quiz3_layout = QVBoxLayout()
+        quiz3_layout.setAlignment(Qt.AlignTop)
 
-        preprocess_btn = QPushButton('3.1 Preprocessing')
-        preprocess_btn.clicked.connect(self.quiz3.preprocessing)
-        quiz3_layout.addWidget(preprocess_btn)
+        btn_31 = QPushButton('3.1 Show disparity map')
+        # btn_31.clicked.connect(self.quiz2.backgroundSubtraction)
+        quiz3_layout.addWidget(btn_31)
 
-        video_tracking_btn = QPushButton('3.2 Video tracking')
-        video_tracking_btn.clicked.connect(self.quiz3.opticalFlow)
-        quiz3_layout.addWidget(video_tracking_btn)
+        quiz3groupbox.setLayout(quiz3_layout)
 
-        self.quiz3groupbox.setLayout(quiz3_layout)
+        return quiz3groupbox
 
-    def createQuiz4(self):
-        self.quiz4 = Quiz4()
-
-        self.quiz4groupbox = QGroupBox("4. Augmented reality")
-        quiz4_layout = QVBoxLayout()
-        quiz4_layout.setAlignment(Qt.AlignTop)
-
-        ar_btn = QPushButton('4.1 Augmented reality')
-        ar_btn.clicked.connect(self.quiz4.projection)
-        quiz4_layout.addWidget(ar_btn)
-
-        self.quiz4groupbox.setLayout(quiz4_layout)
-
-    def createLast2Quiz(self):
-        self.createQuiz3()
-        self.createQuiz4()
-
-        self.verticalGroupBoxes2 = QVBoxLayout()
-        self.verticalGroupBoxes2.addWidget(self.quiz3groupbox)
-        self.verticalGroupBoxes2.addWidget(self.quiz4groupbox)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
