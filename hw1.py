@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QPushButton, QGroupBox, QLineEdit, QApplication, QMe
 from PyQt5.QtGui import QDoubleValidator, QIntValidator, QFont
 from PyQt5.QtCore import Qt, pyqtSlot
 
-from quiz import Quiz1, Quiz3
+from quiz import Quiz1, Quiz2, Quiz3
 
 class App(QDialog):
 
@@ -55,7 +55,7 @@ class App(QDialog):
         quiz_11_12_14_layout.addWidget(btn_11)
 
         btn_12 = QPushButton('1.2 Find Intrinsic')
-        btn_12.clicked.connect(self.quiz1.get_intrinsic_matrix)
+        btn_12.clicked.connect(self.quiz1.get_intrinsic_and_extrinsic_matrix    )
         quiz_11_12_14_layout.addWidget(btn_12)
 
         btn_14 = QPushButton('1.4 Find Distortion')
@@ -84,14 +84,14 @@ class App(QDialog):
 
 
     def createQuiz2(self):
-        # self.quiz2 = Quiz2()
+        self.quiz2 = Quiz2()
 
         quiz2groupbox = QGroupBox("2. Augmented Reality")
         quiz2_layout = QVBoxLayout()
         quiz2_layout.setAlignment(Qt.AlignTop)
 
         btn_21 = QPushButton('2.1 Show tetrahedron')
-        # btn_21.clicked.connect(self.quiz2.backgroundSubtraction)
+        btn_21.clicked.connect(self.quiz2.projection)
         quiz2_layout.addWidget(btn_21)
 
         quiz2groupbox.setLayout(quiz2_layout)
