@@ -193,3 +193,58 @@ class Quiz3():
         disparity = stereo.compute(self.imageL, self.imageR)
         plt.imshow(disparity, 'gray')
         plt.show()
+
+
+class Quiz4():
+    def __init__(self):
+        self.imageL = cv2.imread('src/Q4_Image/Aerial1.jpg')
+        self.img1 = cv2.imread('src/Q4_Image/Aerial1.jpg', 0)
+        self.imageR = cv2.imread('src/Q4_Image/Aerial2.jpg')
+        self.img2 = cv2.imread('src/Q4_Image/Aerial2.jpg', 0)
+        self.kp1 = []
+        self.kp2 = []
+        self.des1 = []
+        self.des2 = []
+
+    def sift(self):
+        sift = cv2.xfeatures2d.SIFT_create()
+
+        gray1= cv2.cvtColor(self.imageL, cv2.COLOR_BGR2GRAY)
+        kp1, des1 = sift.detectAndCompute(gray1, None)
+        size1 = [kp.size for kp in kp1]
+        # self.kp1, self.des1 = kp1, des1
+        tuple_list = zip(kp1, des1, size1)
+        # self.kp1, self.des1 = kp1, des1
+        tuple_list = sorted(tuple_list, key=lambda t: t[2], reverse=True)[:7]
+        self.kp1 = [t[0] for t in tuple_list]
+        self.des1 = [t[1] for t in tuple_list]
+        img = cv2.drawKeypoints(gray1, self.kp1, self.imageL)
+        # cv2.imshow('gray1', img)
+        cv2.imwrite('FeatureAerial1.jpg', img)
+
+        gray2= cv2.cvtColor(self.imageR, cv2.COLOR_BGR2GRAY)
+        kp2, des2 = sift.detectAndCompute(gray2, None)
+        size2 = [kp.size for kp in kp2]
+        # self.kp1, self.des1 = kp1, des1
+        tuple_list = zip(kp2, des2, size2)
+        # self.kp1, self.des1 = kp1, des1
+        tuple_list = sorted(tuple_list, key=lambda t: t[2], reverse=True)[:7]
+        self.kp2 = [t[0] for t in tuple_list]
+        self.des2 = [t[1] for t in tuple_list]
+        img = cv2.drawKeypoints(gray2, self.kp2, self.imageR)
+        # cv2.imshow('gray2', img)
+        cv2.imwrite('FeatureAerial2.jpg', img)
+
+
+    def matcher(self):
+        # BFMatcher with default params
+        bf = cv2.BFMatcher()
+        matches = bf.knnMatch(np.array(self.des1), np.array(self.des2), k=2)
+        # Apply ratio test
+        good = []
+        for m,n in matches:
+            if m.distance < 0.75*n.distance:
+                good.append([m])
+        # cv2.drawMatchesKnn expects list of lists as matches.
+        img3 = cv2.drawMatchesKnn(self.imageL,self.kp1,self.imageR, self.kp2, good, None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+        plt.imshow(img3),plt.show()

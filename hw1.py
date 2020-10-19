@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QPushButton, QGroupBox, QLineEdit, QApplication, QMe
 from PyQt5.QtGui import QDoubleValidator, QIntValidator, QFont
 from PyQt5.QtCore import Qt, pyqtSlot
 
-from quiz import Quiz1, Quiz2, Quiz3
+from quiz import Quiz1, Quiz2, Quiz3, Quiz4
 
 class App(QDialog):
 
@@ -32,6 +32,8 @@ class App(QDialog):
         windowLayout.addWidget(self.createQuiz1())
         windowLayout.addWidget(self.createQuiz2())
         windowLayout.addWidget(self.createQuiz3())
+        windowLayout.addWidget(self.createQuiz4())
+        # windowLayout.addWidget(self.createQuiz5())
         self.setLayout(windowLayout)
 
         self.center()
@@ -48,20 +50,20 @@ class App(QDialog):
         quiz_11_12_14_layout = QVBoxLayout()
         quiz_11_12_14_layout.setAlignment(Qt.AlignTop)
 
-        quiz_13_groupbox = QGroupBox("1.3 Find Extrinsic")
 
         btn_11 = QPushButton('1.1 Find Corners')
         btn_11.clicked.connect(self.quiz1.chessboard_corners)
         quiz_11_12_14_layout.addWidget(btn_11)
 
         btn_12 = QPushButton('1.2 Find Intrinsic')
-        btn_12.clicked.connect(self.quiz1.get_intrinsic_and_extrinsic_matrix    )
+        btn_12.clicked.connect(self.quiz1.get_intrinsic_and_extrinsic_matrix)
         quiz_11_12_14_layout.addWidget(btn_12)
 
         btn_14 = QPushButton('1.4 Find Distortion')
         btn_14.clicked.connect(self.quiz1.get_distortion_matrix)
         quiz_11_12_14_layout.addWidget(btn_14)
 
+        quiz_13_groupbox = QGroupBox("1.3 Find Extrinsic")
         quiz_13_layout = QVBoxLayout()
         quiz_13_layout.addWidget(QLabel("Select image"))
 
@@ -77,7 +79,8 @@ class App(QDialog):
         quiz_13_layout.addWidget(btn_13)
 
         quiz1_layout.addLayout(quiz_11_12_14_layout)
-        quiz1_layout.addLayout(quiz_13_layout)
+        quiz_13_groupbox.setLayout(quiz_13_layout)
+        quiz1_layout.addWidget(quiz_13_groupbox)
         quiz1groupbox.setLayout(quiz1_layout)
 
         return quiz1groupbox
@@ -113,6 +116,25 @@ class App(QDialog):
         quiz3groupbox.setLayout(quiz3_layout)
 
         return quiz3groupbox
+
+    def createQuiz4(self):
+        self.quiz4 = Quiz4()
+
+        quiz4groupbox = QGroupBox("4. SIFT")
+        quiz4_layout = QVBoxLayout()
+        quiz4_layout.setAlignment(Qt.AlignTop)
+
+        btn_41 = QPushButton('4.1 KeyPoints')
+        btn_41.clicked.connect(self.quiz4.sift)
+        quiz4_layout.addWidget(btn_41)
+
+        btn_42 = QPushButton('4.2 Matched Points')
+        btn_42.clicked.connect(self.quiz4.matcher)
+        quiz4_layout.addWidget(btn_42)
+
+        quiz4groupbox.setLayout(quiz4_layout)
+
+        return quiz4groupbox
 
 
 if __name__ == '__main__':
