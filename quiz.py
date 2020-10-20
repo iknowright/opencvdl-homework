@@ -1,6 +1,5 @@
 import random
 import time
-import glob
 
 from PyQt5.QtWidgets import QMessageBox
 # Image processing use case
@@ -248,3 +247,14 @@ class Quiz4():
         # cv2.drawMatchesKnn expects list of lists as matches.
         img3 = cv2.drawMatchesKnn(self.imageL,self.kp1,self.imageR, self.kp2, good, None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
         plt.imshow(img3),plt.show()
+
+
+class Quiz5():
+    def __init__(self):
+        pass
+
+    def test(self):
+        pass
+
+    def matcher(self):
+        pass
