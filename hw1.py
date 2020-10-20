@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QPushButton, QGroupBox, QLineEdit, QApplication, QMe
 from PyQt5.QtGui import QDoubleValidator, QIntValidator, QFont
 from PyQt5.QtCore import Qt, pyqtSlot
 
-from quiz import Quiz1, Quiz2, Quiz3, Quiz4
+from quiz import Quiz1, Quiz2, Quiz3, Quiz4, Quiz5
 
 class App(QDialog):
 
@@ -138,22 +138,22 @@ class App(QDialog):
         return quiz4groupbox
 
     def createQuiz5(self):
-        # self.quiz4 = Quiz4()
+        self.quiz5 = Quiz5()
 
         quiz5groupbox = QGroupBox("5. Cifar10 - VGG16")
         quiz5_layout = QVBoxLayout()
         quiz5_layout.setAlignment(Qt.AlignTop)
 
         btn_51 = QPushButton('5.1 Show Train Images')
-        # btn_51.clicked.connect()
+        btn_51.clicked.connect(self.quiz5.plot_random)
         quiz5_layout.addWidget(btn_51)
 
         btn_52 = QPushButton('5.2 Show Hyperparameters')
-        # btn_52.clicked.connect()
+        btn_52.clicked.connect(self.quiz5.parameter)
         quiz5_layout.addWidget(btn_52)
 
         btn_53 = QPushButton('5.3 Show Model Structure')
-        # btn_53.clicked.connect()
+        btn_53.clicked.connect(self.quiz5.VGG16)
         quiz5_layout.addWidget(btn_53)
 
         btn_54 = QPushButton('5.4 Show Accuracy')
