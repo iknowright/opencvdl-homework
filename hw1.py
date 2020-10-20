@@ -1,4 +1,5 @@
 import sys
+from functools import partial
 
 # GUI use case
 from PyQt5.QtWidgets import QDesktopWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QDialog
@@ -33,7 +34,7 @@ class App(QDialog):
         windowLayout.addWidget(self.createQuiz2())
         windowLayout.addWidget(self.createQuiz3())
         windowLayout.addWidget(self.createQuiz4())
-        # windowLayout.addWidget(self.createQuiz5())
+        windowLayout.addWidget(self.createQuiz5())
         self.setLayout(windowLayout)
 
         self.center()
@@ -136,6 +137,44 @@ class App(QDialog):
 
         return quiz4groupbox
 
+    def createQuiz5(self):
+        # self.quiz4 = Quiz4()
+
+        quiz5groupbox = QGroupBox("5. Cifar10 - VGG16")
+        quiz5_layout = QVBoxLayout()
+        quiz5_layout.setAlignment(Qt.AlignTop)
+
+        btn_51 = QPushButton('5.1 Show Train Images')
+        # btn_51.clicked.connect()
+        quiz5_layout.addWidget(btn_51)
+
+        btn_52 = QPushButton('5.2 Show Hyperparameters')
+        # btn_52.clicked.connect()
+        quiz5_layout.addWidget(btn_52)
+
+        btn_53 = QPushButton('5.3 Show Model Structure')
+        # btn_53.clicked.connect()
+        quiz5_layout.addWidget(btn_53)
+
+        btn_54 = QPushButton('5.4 Show Accuracy')
+        # btn_54.clicked.connect()
+        quiz5_layout.addWidget(btn_54)
+
+        self.textbox = QLineEdit(self)
+        quiz5_layout.addWidget(self.textbox)
+
+        btn_55 = QPushButton('5.5 Test')
+        btn_55.clicked.connect(self.on_click)
+        quiz5_layout.addWidget(btn_55)
+
+        quiz5groupbox.setLayout(quiz5_layout)
+
+        return quiz5groupbox
+
+    @pyqtSlot()
+    def on_click(self):
+        textboxValue = self.textbox.text()
+        print(textboxValue)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
