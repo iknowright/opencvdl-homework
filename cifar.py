@@ -106,11 +106,38 @@ class Quiz5():
             pickle.dump(history.history, file_pi)
         self.model.save('trained_model.h5')
 
-    def predit(self):
+    def get_graph(self):
         with open('training_history', 'rb') as fo:
             data = pickle.load(fo)
             print(data)
             print(len(data["loss"]))
+
+        plt.figure(1)
+        plt.subplot(2, 1, 1)
+        plt.plot(data['loss'])
+        plt.title("loss")
+        plt.subplot(2, 1, 2)
+        plt.plot(data['accuracy'])
+        plt.title("accuracy")
+        plt.show()
+
+    def predit(self, index):
+        model = load_model('trained_model.h5')
+
+        x_train, y_train, x_test, y_test = self.get_model_data()
+        y = model.predict(x_test)
+
+        meta_data = self.unpickle(f"src/Q5_Data/batches.meta")
+        label_names = meta_data[b'label_names']
+
+        plt.figure(1)
+        plt.subplot(1, 2, 1)
+        plt.imshow(x_test[index])
+        plt.title("image")
+        plt.subplot(1, 2, 2)
+        plt.bar(label_names, y[index])
+        plt.title("prediction")
+        plt.show()
 
 
 
@@ -118,5 +145,6 @@ class Quiz5():
 quiz = Quiz5()
 # quiz.VGG16()
 # quiz.train()
-# quiz.predit()
+# quiz.get_graph()
+quiz.predit(123)
 

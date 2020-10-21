@@ -5,3 +5,5 @@ FeatureAerial1.jpg
 FeatureAerial2.jpg
 
 cifar10.data
+trained_model.h5
+training_history

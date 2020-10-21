@@ -157,7 +157,7 @@ class App(QDialog):
         quiz5_layout.addWidget(btn_53)
 
         btn_54 = QPushButton('5.4 Show Accuracy')
-        # btn_54.clicked.connect()
+        btn_54.clicked.connect(self.on_click)
         quiz5_layout.addWidget(btn_54)
 
         self.textbox = QLineEdit(self)
@@ -174,7 +174,8 @@ class App(QDialog):
     @pyqtSlot()
     def on_click(self):
         textboxValue = self.textbox.text()
-        print(textboxValue)
+        self.quiz5.predit(int(textboxValue))
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

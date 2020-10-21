@@ -332,3 +332,21 @@ class Quiz5():
         print(f"batch_size: {self.batch_size}")
         print(f"learning_rate: {self.learning_rate}")
         print(f"optimizer: {self.optimizer}")
+
+    def predit(self, index):
+        model = load_model('trained_model.h5')
+
+        x_train, y_train, x_test, y_test = self.get_model_data()
+        y = model.predict(x_test)
+
+        meta_data = self.unpickle(f"src/Q5_Data/batches.meta")
+        label_names = meta_data[b'label_names']
+
+        plt.figure(1)
+        plt.subplot(1, 2, 1)
+        plt.imshow(x_test[index])
+        plt.title("image")
+        plt.subplot(1, 2, 2)
+        plt.bar(label_names, y[index])
+        plt.title("prediction")
+        plt.show()
