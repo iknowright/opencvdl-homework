@@ -2,19 +2,73 @@ import random
 import time
 import pickle
 
-from PyQt5.QtWidgets import QMessageBox
-# Image processing use case
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-np.set_printoptions(suppress=True, formatter={'float_kind':'{:.3f}'.format})
+class Subtractor:
+    def __init__(self, train_frames):
+        self.train(train_frames)
+
+    def train(self, train_frames):
+        frames = np.array([
+            cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+            for frame in train_frames
+        ])
+
+        self.pixels = np.moveaxis(frames, 0, -1)
+        height, width, n = self.pixels.shape
+        self.mean = np.zeros((height, width))
+        self.std = np.zeros((height, width))
+        for i in range(height):
+            for j in range(width):
+                pixels = self.pixels[i][j]
+                mean = np.mean(pixels)
+                std = np.std(pixels)
+                std = std if std > 5 else 5
+                self.mean[i][j] = mean
+                self.std[i][j] = std
+
+    def apply(self, frame):
+        gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+
+        new_frame = gray - self.mean
+        new_frame = (new_frame > 5 * self.std).astype(np.uint8) * 255
+
+        return new_frame
 
 
 class Quiz1():
     def __init__(self):
         pass
+
+    def background_subtraction(self):
+        cap = cv2.VideoCapture('src/Q1_Image/bgSub.mp4')
+
+        fps = cap.get(cv2.CAP_PROP_FPS)
+
+        frames = []
+        while(cap.isOpened()):
+            ret, frame = cap.read()
+            if not ret:
+                break
+            frames.append(frame)
+
+
+        train = frames[:50]
+        test = frames[50:]
+
+        model = Subtractor(train)
+        # render
+        for frame in test:
+            subframe = model.apply(frame)
+            stacked_subframe = np.stack((subframe,)*3, axis=-1)
+            demoframe = cv2.hconcat([frame,stacked_subframe])
+            cv2.imshow('Demo', demoframe)
+            if cv2.waitKey(25) & 0xFF == ord('q'):
+                break
+
 
 class Quiz2():
     def __init__(self):

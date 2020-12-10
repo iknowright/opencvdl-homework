@@ -48,7 +48,7 @@ class App(QDialog):
         quiz1_layout.setAlignment(Qt.AlignTop)
 
         btn_11 = QPushButton('1.1 Background Subtraction')
-        # btn_11.clicked.connect()
+        btn_11.clicked.connect(self.quiz1.background_subtraction)
         quiz1_layout.addWidget(btn_11)
 
         quiz1groupbox.setLayout(quiz1_layout)
