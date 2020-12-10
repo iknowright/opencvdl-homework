@@ -64,11 +64,11 @@ class App(QDialog):
         quiz2_layout.setAlignment(Qt.AlignTop)
 
         btn_21 = QPushButton('2.1 Preprocessing')
-        # btn_21.clicked.connect()
+        btn_21.clicked.connect(self.quiz2.preprocessing)
         quiz2_layout.addWidget(btn_21)
 
         btn_21 = QPushButton('2.2 Video Tracking')
-        # btn_21.clicked.connect()
+        btn_21.clicked.connect(self.quiz2.optical_flow)
         quiz2_layout.addWidget(btn_21)
 
         quiz2groupbox.setLayout(quiz2_layout)
