@@ -5,6 +5,7 @@ import pickle
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.decomposition import PCA
 
 
 class Subtractor:
@@ -242,3 +243,47 @@ class Quiz3:
 class Quiz4:
     def __init__(self):
         pass
+
+    def reconstruction(self):
+        images = []
+        # image_set = hwhite.astype(np.uint8)
+
+        badges = []
+        for i in range(34):
+            image = cv2.imread(f"src/Q4_Image/{i + 1}.jpg")
+            badges.append(image.flatten())
+
+        reduced_images = []
+        for i in range(34):
+            image = cv2.imread(f"src/Q4_Image/{i + 1}.jpg")
+
+            # reconstruction
+            print(f"processing image {i + 1}")
+
+            image_size = (100, 100, 3)
+
+            estimator = PCA(n_components=int(0.8 * 34))
+            estimator.fit(badges)
+
+            components = estimator.transform(badges)
+            projected = estimator.inverse_transform(components)
+
+            reduced = projected[i]
+            reduced = (reduced - reduced.min()) * 255 / (reduced.max() - reduced.min())
+            reduced = reduced.astype(np.uint8)
+
+            reduced_image = reduced.reshape(image_size)
+            reduced_images.append(reduced_image)
+
+        for i, image in enumerate(reduced_images):
+            plt.subplot(4, 17, int(i / 17) * 34 + i % 17 + 1)
+            plt.imshow(cv2.cvtColor(badges[i].reshape(image_size), cv2.COLOR_BGR2RGB))
+            plt.xticks(())
+            plt.yticks(())
+            plt.subplot(4, 17, int(i / 17) * 34 + i % 17 + 17 + 1)
+            plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+            plt.xticks(())
+            plt.yticks(())
+        plt.show()
+
+        cv2.waitKey(0)

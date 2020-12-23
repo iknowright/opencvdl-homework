@@ -110,7 +110,7 @@ class App(QDialog):
         quiz4_layout.setAlignment(Qt.AlignTop)
 
         btn_41 = QPushButton("4.1 Image Reconstruction")
-        # btn_41.clicked.connect()
+        btn_41.clicked.connect(self.quiz4.reconstruction)
         quiz4_layout.addWidget(btn_41)
 
         btn_42 = QPushButton("4.2 Compute Reconstruction Error")
