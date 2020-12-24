@@ -114,7 +114,7 @@ class App(QDialog):
         quiz4_layout.addWidget(btn_41)
 
         btn_42 = QPushButton("4.2 Compute Reconstruction Error")
-        # btn_42.clicked.connect()
+        btn_42.clicked.connect(self.quiz4.show_error)
         quiz4_layout.addWidget(btn_42)
 
         quiz4groupbox.setLayout(quiz4_layout)

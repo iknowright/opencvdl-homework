@@ -242,7 +242,7 @@ class Quiz3:
 
 class Quiz4:
     def __init__(self):
-        pass
+        self.reconstruction_error = []
 
     def reconstruction(self):
         images = []
@@ -272,6 +272,9 @@ class Quiz4:
             reduced = (reduced - reduced.min()) * 255 / (reduced.max() - reduced.min())
             reduced = reduced.astype(np.uint8)
 
+            error = np.sum((badges[i] - reduced) ** 2)
+            self.reconstruction_error.append(error)
+
             reduced_image = reduced.reshape(image_size)
             reduced_images.append(reduced_image)
 
@@ -287,3 +290,6 @@ class Quiz4:
         plt.show()
 
         cv2.waitKey(0)
+
+    def show_error(self):
+        print(self.reconstruction_error)
