@@ -12,9 +12,6 @@ from datetime import datetime
 
 sess = tf.InteractiveSession()
 
-# 資料路徑
-DATASET_PATH  = 'sample'
-
 # 影像大小
 IMAGE_SIZE = (224, 224)
 
@@ -22,16 +19,16 @@ IMAGE_SIZE = (224, 224)
 NUM_CLASSES = 2
 
 # 若 GPU 記憶體不足，可調降 batch size 或凍結更多層網路
-BATCH_SIZE = 8
+BATCH_SIZE = 32
 
 # 凍結網路層數
 FREEZE_LAYERS = 2
 
 # Epoch 數
-NUM_EPOCHS = 20
+NUM_EPOCHS = 5
 
 # 模型輸出儲存的檔案
-WEIGHTS_FINAL = 'model-resnet50-final.h5'
+WEIGHTS_FINAL = 'model-resnet50-final-local.h5'
 
 
 # 透過 data augmentation 產生訓練與驗證用的影像資料

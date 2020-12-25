@@ -2,4 +2,5 @@ __pycache__
 .vscode
 .python-version
 model-resnet50-final.h5
+model-resnet50-final-local.h5
 PetImages
