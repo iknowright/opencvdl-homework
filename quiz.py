@@ -160,9 +160,9 @@ class Quiz2:
                 mask = cv2.line(mask, (a, b), (c, d), color.tolist(), 1)
                 a = int(round(a))
                 b = int(round(b))
-                frame = cv2.rectangle(
-                    frame, (a - 5, b - 5), (a + 5, b + 5), (0, 0, 255), 1
-                )
+                frame = cv2.rectangle(frame, (a - 5, b - 5), (a + 5, b + 5), (0, 0, 255), 1)
+                frame = cv2.line(frame, (a - 5, b), (a + 5, b), (0, 0, 255), 1)
+                frame = cv2.line(frame, (a, b - 5), (a, b + 5), (0, 0, 255), 1)
 
             img = cv2.add(frame, mask)
             cv2.imshow("frame", img)
